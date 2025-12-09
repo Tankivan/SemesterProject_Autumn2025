@@ -30,145 +30,238 @@ import img27 from "../images/соболь.png"
 import img28 from "../images/бобр.png"
 import img29 from "../images/синица.png"
 
+import modalimg1 from "../modalimg/ель.png"
+import modalimg2 from "../modalimg/таволга.png"
+import modalimg3 from "../modalimg/клен.png"
+import modalimg4 from "../modalimg/кровохлебка.png"
+import modalimg5 from "../modalimg/мать-и-мачеха.png"
+import modalimg6 from "../modalimg/лиса.png"
+import modalimg7 from "../modalimg/калина.png"
+import modalimg8 from "../modalimg/осина.png"
+import modalimg9 from "../modalimg/лось.png"
+import modalimg10 from "../modalimg/сосна.png"
+import modalimg11 from "../modalimg/черемуха.png"
+import modalimg12 from "../modalimg/дуб.png"
+import modalimg13 from "../modalimg/береза.png"
+import modalimg14 from "../modalimg/тополь.png"
+import modalimg15 from "../modalimg/кедр.png"
+import modalimg16 from "../modalimg/пихта.png"
+import modalimg17 from "../modalimg/липа.png"
+import modalimg18 from "../modalimg/бодяк.png"
+import modalimg19 from "../modalimg/борщевик.png"
+import modalimg20 from "../modalimg/клевер.png"
+import modalimg21 from "../modalimg/полынь.png"
+import modalimg22 from "../modalimg/подорожник.png"
+import modalimg23 from "../modalimg/бурундук.png"
+import modalimg24 from "../modalimg/бурый медведь.png"
+import modalimg25 from "../modalimg/соловей.png"
+import modalimg26 from "../modalimg/дятел.png"
+import modalimg27 from "../modalimg/соболь.png"
+import modalimg28 from "../modalimg/бобр.png"
+import modalimg29 from "../modalimg/синица.png"
+
+function getHabitatByName(data, speciesName) {
+    // Ищем таблицу Species
+    const speciesTable = data.objects.find(obj => obj.name === "Species");
+    
+    if (!speciesTable) {
+        return "Таблица Species не найдена";
+    }
+    
+    // Ищем строку с нужным названием вида
+    const speciesRow = speciesTable.rows.find(row => row[1] === speciesName);
+    
+    if (!speciesRow) {
+        return `Вид "${speciesName}" не найден в базе данных`;
+    }
+    
+    return speciesRow[2];
+}
+
+function getModalImageByName(name) {
+    const imageMap = {
+        // Деревья
+        'Ель': modalimg1,
+        'Клен': modalimg3,
+        'Осина': modalimg8,
+        'Сосна': modalimg10,
+        'Дуб': modalimg12,
+        'Береза': modalimg13,
+        'Тополь': modalimg14,
+        'Кедр': modalimg15,
+        'Пихта': modalimg16,
+        'Липа': modalimg17,
+        
+        // Растения
+        'Таволга': modalimg2,
+        'Кровохлебка': modalimg4,
+        'Мать-и-мачеха': modalimg5,
+        'Калина': modalimg7,
+        'Черемуха': modalimg11,
+        'Бодяк': modalimg18,
+        'Борщевик': modalimg19,
+        'Клевер': modalimg20,
+        'Полынь': modalimg21,
+        'Подорожник': modalimg22,
+        
+        // Животные
+        'Лиса': modalimg6,
+        'Лось': modalimg9,
+        'Бурундук': modalimg23,
+        'Бурый медведь': modalimg24,
+        'Соловей': modalimg25,
+        'Дятел': modalimg26,
+        'Соболь': modalimg27,
+        'Бобр': modalimg28,
+        'Синица': modalimg29
+    };
+
+    // Возвращаем изображение или null, если имя не найдено
+    return imageMap[name] || null;
+}
+
+const jsonData = require("../projectdb.json")
+
 const Home = () => {
     const [selectedId, setSelectedId] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState({});
+    const [modalImageSrc, setModalImageSrc] = useState(null);
 
     const getObjectInfo = (id) => {
         const infoMap = {
             // Деревья(ель)
-            'img1': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево семейства сосновых.' },
-            'img2': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево семейства сосновых.' },
-            'img3': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево семейства сосновых.' },
-            'img4': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево семейства сосновых.' },
-            'img5': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево семейства сосновых.' },
-            'img6': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево семейства сосновых.' },
-            'img7': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево семейства сосновых.' },
+            'img1': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Ель") },
+            'img2': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Ель") },
+            'img3': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Ель") },
+            'img4': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Ель") },
+            'img5': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Ель") },
+            'img6': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Ель") },
+            'img7': { name: 'Ель', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Ель") },
 
             // Растение(таволга)
-            'img8': { name: 'Таволга', type: 'растение', family: 'Розоцветные', description: 'Травянистое растение семейства розоцветных.' },
+            'img8': { name: 'Таволга', type: 'растение', family: 'Розоцветные', description: getHabitatByName(jsonData, "Таволга") },
 
             // Деревья(клен)
-            'img9': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: 'Лиственное дерево с характерными резными листьями.' },
-            'img10': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: 'Лиственное дерево с характерными резными листьями.' },
-            'img11': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: 'Лиственное дерево с характерными резными листьями.' },
-            'img12': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: 'Лиственное дерево с характерными резными листьями.' },
-            'img13': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: 'Лиственное дерево с характерными резными листьями.' },
-            'img14': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: 'Лиственное дерево с характерными резными листьями.' },
-            'img15': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: 'Лиственное дерево с характерными резными листьями.' },
+            'img9': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: getHabitatByName(jsonData, "Клен") },
+            'img10': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: getHabitatByName(jsonData, "Клен") },
+            'img11': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: getHabitatByName(jsonData, "Клен") },
+            'img12': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: getHabitatByName(jsonData, "Клен") },
+            'img13': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: getHabitatByName(jsonData, "Клен") },
+            'img14': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: getHabitatByName(jsonData, "Клен") },
+            'img15': { name: 'Клен', type: 'дерево', family: 'Кленовые', description: getHabitatByName(jsonData, "Клен") },
 
             // Растение(кровохлебка)
-            'img16': { name: 'Кровохлебка', type: 'растение', family: 'Розоцветные', description: 'Лекарственное растение с кровоостанавливающими свойствами.' },
+            'img16': { name: 'Кровохлебка', type: 'растение', family: 'Розоцветные', description: getHabitatByName(jsonData, "Кровохлебка") },
 
             // Растение(мать-и-мачеха)
-            'img17': { name: 'Мать-и-мачеха', type: 'растение', family: 'Астровые', description: 'Раннецветущее лекарственное растение.' },
+            'img17': { name: 'Мать-и-мачеха', type: 'растение', family: 'Астровые', description: getHabitatByName(jsonData, "Мать-и-мачеха") },
 
             // Животные(лисица)
-            'img18': { name: 'Лисица', type: 'животное', family: 'Псовые', description: 'Хищное млекопитающее семейства псовых.' },
+            'img18': { name: 'Лиса', type: 'животное', family: 'Псовые', description: getHabitatByName(jsonData, "Лиса") },
 
             // Растение(калина)
-            'img19': { name: 'Калина', type: 'растение', family: 'Адоксовые', description: 'Кустарник с полезными ягодами.' },
+            'img19': { name: 'Калина', type: 'растение', family: 'Адоксовые', description: getHabitatByName(jsonData, "Калина") },
 
             // Деревья(осина)
-            'img20': { name: 'Осина', type: 'дерево', family: 'Ивовые', description: 'Лиственное дерево семейства ивовых.' },
-            'img21': { name: 'Осина', type: 'дерево', family: 'Ивовые', description: 'Лиственное дерево семейства ивовых.' },
-            'img22': { name: 'Осина', type: 'дерево', family: 'Ивовые', description: 'Лиственное дерево семейства ивовых.' },
+            'img20': { name: 'Осина', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Осина") },
+            'img21': { name: 'Осина', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Осина") },
+            'img22': { name: 'Осина', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Осина") },
 
             // Животные(лось)
-            'img23': { name: 'Лось', type: 'животное', family: 'Оленевые', description: 'Крупное парнокопытное млекопитающее.' },
+            'img23': { name: 'Лось', type: 'животное', family: 'Оленевые', description: getHabitatByName(jsonData, "Лось") },
 
             // Деревья(сосна)
-            'img24': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево.' },
-            'img25': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево.' },
-            'img26': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево.' },
-            'img27': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево.' },
-            'img28': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево.' },
-            'img29': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево.' },
-            'img30': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: 'Хвойное вечнозеленое дерево.' },
+            'img24': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Сосна") },
+            'img25': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Сосна") },
+            'img26': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Сосна") },
+            'img27': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Сосна") },
+            'img28': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Сосна") },
+            'img29': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Сосна") },
+            'img30': { name: 'Сосна', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Сосна") },
 
             // Растение(черемуха)
-            'img31': { name: 'Черемуха', type: 'растение', family: 'Розоцветные', description: 'Дерево или кустарник с ароматными цветами.' },
+            'img31': { name: 'Черемуха', type: 'растение', family: 'Розоцветные', description: getHabitatByName(jsonData, "Черемуха") },
 
             // Деревья(дуб)
-            'img32': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: 'Мощное лиственное дерево-долгожитель.' },
-            'img33': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: 'Мощное лиственное дерево-долгожитель.' },
-            'img34': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: 'Мощное лиственное дерево-долгожитель.' },
-            'img35': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: 'Мощное лиственное дерево-долгожитель.' },
-            'img36': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: 'Мощное лиственное дерево-долгожитель.' },
+            'img32': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: getHabitatByName(jsonData, "Дуб") },
+            'img33': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: getHabitatByName(jsonData, "Дуб") },
+            'img34': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: getHabitatByName(jsonData, "Дуб") },
+            'img35': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: getHabitatByName(jsonData, "Дуб") },
+            'img36': { name: 'Дуб', type: 'дерево', family: 'Буковые', description: getHabitatByName(jsonData, "Дуб") },
 
             // Деревья(береза)
-            'img37': { name: 'Береза', type: 'дерево', family: 'Березовые', description: 'Лиственное дерево с белой корой.' },
-            'img38': { name: 'Береза', type: 'дерево', family: 'Березовые', description: 'Лиственное дерево с белой корой.' },
-            'img39': { name: 'Береза', type: 'дерево', family: 'Березовые', description: 'Лиственное дерево с белой корой.' },
-            'img40': { name: 'Береза', type: 'дерево', family: 'Березовые', description: 'Лиственное дерево с белой корой.' },
-            'img41': { name: 'Береза', type: 'дерево', family: 'Березовые', description: 'Лиственное дерево с белой корой.' },
+            'img37': { name: 'Береза', type: 'дерево', family: 'Березовые', description: getHabitatByName(jsonData, "Береза") },
+            'img38': { name: 'Береза', type: 'дерево', family: 'Березовые', description: getHabitatByName(jsonData, "Береза") },
+            'img39': { name: 'Береза', type: 'дерево', family: 'Березовые', description: getHabitatByName(jsonData, "Береза") },
+            'img40': { name: 'Береза', type: 'дерево', family: 'Березовые', description: getHabitatByName(jsonData, "Береза") },
+            'img41': { name: 'Береза', type: 'дерево', family: 'Березовые', description: getHabitatByName(jsonData, "Береза") },
 
             // Деревья(тополь)
-            'img42': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: 'Быстрорастущее лиственное дерево.' },
-            'img43': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: 'Быстрорастущее лиственное дерево.' },
-            'img44': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: 'Быстрорастущее лиственное дерево.' },
-            'img45': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: 'Быстрорастущее лиственное дерево.' },
-            'img46': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: 'Быстрорастущее лиственное дерево.' },
-            'img47': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: 'Быстрорастущее лиственное дерево.' },
-            'img48': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: 'Быстрорастущее лиственное дерево.' },
+            'img42': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Тополь") },
+            'img43': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Тополь") },
+            'img44': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Тополь") },
+            'img45': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Тополь") },
+            'img46': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Тополь") },
+            'img47': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Тополь") },
+            'img48': { name: 'Тополь', type: 'дерево', family: 'Ивовые', description: getHabitatByName(jsonData, "Тополь") },
 
             // Деревья(кедр)
-            'img49': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: 'Крупное хвойное дерево с ценной древесиной.' },
-            'img50': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: 'Крупное хвойное дерево с ценной древесиной.' },
-            'img51': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: 'Крупное хвойное дерево с ценной древесиной.' },
-            'img52': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: 'Крупное хвойное дерево с ценной древесиной.' },
-            'img53': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: 'Крупное хвойное дерево с ценной древесиной.' },
+            'img49': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Кедр") },
+            'img50': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Кедр") },
+            'img51': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Кедр") },
+            'img52': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Кедр") },
+            'img53': { name: 'Кедр', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Кедр") },
 
             // Деревья(пихта)
-            'img54': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: 'Хвойное дерево с мягкой хвоей.' },
-            'img55': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: 'Хвойное дерево с мягкой хвоей.' },
-            'img56': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: 'Хвойное дерево с мягкой хвоей.' },
-            'img57': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: 'Хвойное дерево с мягкой хвоей.' },
-            'img58': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: 'Хвойное дерево с мягкой хвоей.' },
+            'img54': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Пихта") },
+            'img55': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Пихта") },
+            'img56': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Пихта") },
+            'img57': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Пихта") },
+            'img58': { name: 'Пихта', type: 'дерево', family: 'Сосновые', description: getHabitatByName(jsonData, "Пихта") },
 
             // Деревья(липа)
-            'img59': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: 'Лиственное дерево с ароматными цветами.' },
-            'img60': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: 'Лиственное дерево с ароматными цветами.' },
-            'img61': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: 'Лиственное дерево с ароматными цветами.' },
-            'img62': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: 'Лиственное дерево с ароматными цветами.' },
-            'img63': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: 'Лиственное дерево с ароматными цветами.' },
+            'img59': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: getHabitatByName(jsonData, "Липа") },
+            'img60': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: getHabitatByName(jsonData, "Липа") },
+            'img61': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: getHabitatByName(jsonData, "Липа") },
+            'img62': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: getHabitatByName(jsonData, "Липа") },
+            'img63': { name: 'Липа', type: 'дерево', family: 'Мальвовые', description: getHabitatByName(jsonData, "Липа") },
 
             // Растение(бодяк)
-            'img64': { name: 'Бодяк', type: 'растение', family: 'Астровые', description: 'Сорное растение семейства астровых.' },
+            'img64': { name: 'Бодяк', type: 'растение', family: 'Астровые', description: getHabitatByName(jsonData, "Бодяк") },
 
             // Растение(борщевик)
-            'img65': { name: 'Борщевик', type: 'растение', family: 'Зонтичные', description: 'Крупное растение, может вызывать ожоги.' },
+            'img65': { name: 'Борщевик', type: 'растение', family: 'Зонтичные', description: getHabitatByName(jsonData, "Борщевик") },
 
             // Растение(клевер)
-            'img66': { name: 'Клевер', type: 'растение', family: 'Бобовые', description: 'Травянистое растение с тройчатыми листьями.' },
+            'img66': { name: 'Клевер', type: 'растение', family: 'Бобовые', description: getHabitatByName(jsonData, "Клевер") },
 
             // Растение(полынь)
-            'img67': { name: 'Полынь', type: 'растение', family: 'Астровые', description: 'Ароматное растение с горьким вкусом.' },
+            'img67': { name: 'Полынь', type: 'растение', family: 'Астровые', description: getHabitatByName(jsonData, "Полынь") },
 
             // Растение(подорожник)
-            'img68': { name: 'Подорожник', type: 'растение', family: 'Подорожниковые', description: 'Лекарственное растение с широкими листьями.' },
+            'img68': { name: 'Подорожник', type: 'растение', family: 'Подорожниковые', description: getHabitatByName(jsonData, "Подорожник") },
 
             // Животные(бурундук)
-            'img69': { name: 'Бурундук', type: 'животное', family: 'Беличьи', description: 'Мелкий грызун с полосками на спине.' },
+            'img69': { name: 'Бурундук', type: 'животное', family: 'Беличьи', description: getHabitatByName(jsonData, "Бурундук") },
 
             // Животные(бурый медведь)
-            'img70': { name: 'Бурый медведь', type: 'животное', family: 'Медвежьи', description: 'Крупное хищное млекопитающее.' },
+            'img70': { name: 'Бурый медведь', type: 'животное', family: 'Медвежьи', description: getHabitatByName(jsonData, "Бурый медведь") },
 
             // Животные(соловей)
-            'img71': { name: 'Соловей', type: 'животное', family: 'Мухоловковые', description: 'Певчая птица с красивым голосом.' },
+            'img71': { name: 'Соловей', type: 'животное', family: 'Мухоловковые', description: getHabitatByName(jsonData, "Соловей") },
 
             // Животные(дятел)
-            'img72': { name: 'Дятел', type: 'животное', family: 'Дятловые', description: 'Птица, долбящая деревья в поисках насекомых.' },
+            'img72': { name: 'Дятел', type: 'животное', family: 'Дятловые', description: getHabitatByName(jsonData, "Дятел") },
 
             // Животные(соболь)
-            'img73': { name: 'Соболь', type: 'животное', family: 'Куньи', description: 'Хищное млекопитающее с ценным мехом.' },
+            'img73': { name: 'Соболь', type: 'животное', family: 'Куньи', description: getHabitatByName(jsonData, "Соболь") },
 
             // Животные(бобр)
-            'img74': { name: 'Бобр', type: 'животное', family: 'Бобровые', description: 'Крупный грызун, строитель плотин.' },
+            'img74': { name: 'Бобр', type: 'животное', family: 'Бобровые', description: getHabitatByName(jsonData, "Бобр") },
 
             // Животные(синица)
-            'img75': { name: 'Синица', type: 'животное', family: 'Синицевые', description: 'Мелкая певчая птица.' },
+            'img75': { name: 'Синица', type: 'животное', family: 'Синицевые', description: getHabitatByName(jsonData, "Синица") },
         };
 
         return infoMap[id] || {
@@ -182,8 +275,10 @@ const Home = () => {
     const handleImageClick = (id) => {
         setSelectedId(selectedId === id ? null : id);
         const info = getObjectInfo(id);
+        const imageSrc = getModalImageByName(info.name)
         setModalContent(info);
         setShowModal(true);
+        setModalImageSrc(imageSrc);
     };
 
     const closeModal = () => {
@@ -341,12 +436,28 @@ const Home = () => {
             {/* Модальное окно  */}
             {showModal && (
                 <div className="modal-overlay" onClick={closeModal}>
-                    <div className="modal-right" onClick={(e) => e.stopPropagation()}>
+                    <div className="modal-right" onClick={(e) => e.stopPropagation()}
+                        >
                         <div className="modal-header">
                             <h2 className="modal-category">{modalContent.type}</h2>
                         </div>
 
                         <div className="modal-body">
+                            <div className="modal-image-container">
+                                <img 
+                                    src={modalImageSrc} 
+                                    alt={modalContent.name} 
+                                    className="modal-image"
+                                    style={{
+                                        maxWidth: '250px',
+                                        maxHeight: '200px',
+                                        width: 'auto',
+                                        height: 'auto',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 3px 10px rgba(0,0,0,0.2)',
+                                    }}
+                                />
+                            </div>
                             <div className="info-item">
                                 <div className="info-label">Название:</div>
                                 <div className="info-value">{modalContent.name}</div>
